@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the start */
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            box-sizing: border-box;
+            margin-top: 50px; /* Add margin to the top */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            color: #333;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #ff7e5f;
+            padding: 15px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-size: 1em;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #feb47b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Heart Disease Prediction</h1>
+        <form id="prediction-form" action="/predict" method="post">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+            
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="0">Female</option>
+                <option value="1">Male</option>
+            </select>
+            
+            <label for="cp">Chest Pain Type:</label>
+            <select id="cp" name="cp" required>
+                <option value="1">Typical Angina</option>
+                <option value="2">Atypical Angina</option>
+                <option value="3">Non-Anginal Pain</option>
+                <option value="4">Asymptomatic</option>
+            </select>
+            
+            <label for="trestbps">Resting Blood Pressure:</label>
+            <input type="number" id="trestbps" name="trestbps" required>
+            
+            <label for="cholestrol">Cholesterol:</label>
+            <input type="number" id="cholestrol" name="cholestrol" required>
+            
+            <label for="fbs">Fasting Blood Sugar:</label>
+            <select id="fbs" name="fbs" required>
+                <option value="0">Less than 120 mg/dl</option>
+                <option value="1">Greater than 120 mg/dl</option>
+            </select>
+            
+            <label for="resting_ECG">Resting Electrocardiographic Results:</label>
+            <select id="resting_ECG" name="resting_ECG" required>
+                <option value="0">Normal</option>
+                <option value="1">Having ST-T wave abnormality</option>
+                <option value="2">Showing probable or definite left ventricular hypertrophy by Estes' criteria</option>
+            </select>
+            
+            <label for="thalach">Maximum Heart Rate Achieved:</label>
+            <input type="number" id="thalach" name="thalach" required>
+            
+            <label for="exang">Exercise Induced Angina:</label>
+            <select id="exang" name="exang" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            
+            <label for="oldPeakHistory">ST Depression Induced by Exercise Relative to Rest:</label>
+            <input type="number" id="oldPeakHistory" name="oldPeakHistory" required>
+            
+            <label for="Slope_levels">Slope of the Peak Exercise ST Segment:</label>
+            <select id="Slope_levels" name="Slope_levels" required>
+                <option value="1">Upsloping</option>
+                <option value="2">Flat</option>
+                <option value="3">Downsloping</option>
+            </select>
+            
+            <label for="CA_levels">Number of Major Vessels Colored by Flourosopy:</label>
+            <input type="number" id="CA_levels" name="CA_levels" required>
+            
+            <label for="thal">Thalassemia:</label>
+            <select id="thal" name="thal" required>
+                <option value="3">Normal</option>
+                <option value="6">Fixed Defect</option>
+            </select>
+            
+            <input type="submit" value="Predict">
+        </form>
+        <div id="prediction-result"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#prediction-form').submit(function(event) {
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '/predict',
+                    data: formData,
+                    success: function(response) {
+                        $('#prediction-result').html(response);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
