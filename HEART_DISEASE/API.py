@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def hello_world():
-    return render_template("heart.html")
+    return render_template("index.html")
 model = None
 def load_model():
     with open('model.pkl', 'rb') as model_file:
@@ -64,6 +64,6 @@ def predict():
         except Exception as e:
             return str(e), 500
     else:
-        return render_template("heart.html")
+        return render_template("index.html")
 if __name__ == '__main__':
     app.run(debug=True)
